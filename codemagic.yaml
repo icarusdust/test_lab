@@ -117,10 +117,10 @@ workflows:
           flutter build ios integration_test/app_test.dart --release
 
           pushd ios
-          xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $OUTPUT -sdk iphoneos build-for-testing 
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ./build/ios_integ/Build/Products -sdk iphoneos build-for-testing 
           popd
 
-          pushd $PRODUCT
+          pushd ./build/ios_integ/Build/Products
           zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos14.7-arm64.xctestrun"
           popd
       - name: Upload to Firebase Test Lab
