@@ -80,6 +80,7 @@ workflows:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace" # <-- Put your encrypted Certificate Private Key here
         # Environment variable values provided when triggering build with Codemagic API. Alternatively add the required values below.
         # APP_STORE_APP_ID: 1555555551 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information
+        BUNDLE_ID: "io.codemagic.fad"
         OUTPUT: "../build/ios_integ"
         PRODUCT: "build/ios_integ/Build/Products"
         DEV_TARGET: "15.4"
