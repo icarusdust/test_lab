@@ -134,7 +134,7 @@ workflows:
           gcloud --quiet config set project flutter-integration-tests
 
           gcloud firebase test ios run --test "./build/ios_integ/Build/Products/ios_tests.zip" \
-            --device model=iphone13,version=15.4,locale=en_GB,orientation=portrait \
+            --device model=iphone11pro,version=15.4,locale=en_GB,orientation=portrait \
             --timeout 3m
     artifacts:
       - build/ios/ipa/*.ipa
