@@ -79,7 +79,7 @@ workflows:
         certificates:
           - ios-development
       groups:
-        - kevin_gcloud
+        - service_account
         # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
         # - ios_creds # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
       vars:
