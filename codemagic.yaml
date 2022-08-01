@@ -73,9 +73,14 @@ workflows:
     name: iOS release
     max_build_duration: 120
     environment:
-      groups:
+      ios_signing:
+        provisioning_profiles:
+          - fad_ios_development
+        certificates:
+          - ios-development
+      # groups:
         # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
-        - ios_creds # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
+        # - ios_creds # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
       vars:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace" # <-- Put your encrypted Certificate Private Key here
         # Environment variable values provided when triggering build with Codemagic API. Alternatively add the required values below.
@@ -94,15 +99,15 @@ workflows:
       - name: Pod install
         script: |
           find . -name "Podfile" -execdir pod install \;
-      - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
-        script: |
-          keychain initialize
-      - name: Fetch signing files
-        script: |
-          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_DEVELOPMENT
-      - name: Add certs to keychain
-        script: |
-          keychain add-certificates
+      # - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
+      #   script: |
+      #     keychain initialize
+      # - name: Fetch signing files
+      #   script: |
+      #     app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_DEVELOPMENT
+      # - name: Add certs to keychain
+      #   script: |
+      #     keychain add-certificates
       - name: Set up code signing settings on Xcode project
         script: |
           xcode-project use-profiles
