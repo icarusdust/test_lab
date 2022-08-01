@@ -126,8 +126,8 @@ workflows:
       - name: Upload to Firebase Test Lab
         script: |
 
-          # Write the environment variable in base64 into a JSON file
-          echo $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS | base64 --decode > ./gcloud_key_file.json
+          # Write the environment variable to a JSON file
+          echo $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS > ./gcloud_key_file.json
           # Using the gcloud CLI (preinstalled on Codemagic) authenticate using the service account key
           gcloud auth activate-service-account --key-file=gcloud_key_file.json
           # Select YOUR Firebase project through which want to run the tests
