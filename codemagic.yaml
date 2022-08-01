@@ -78,7 +78,8 @@ workflows:
           - fad_ios_development
         certificates:
           - ios-development
-      # groups:
+      groups:
+        - kevin_gcloud
         # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
         # - ios_creds # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
       vars:
@@ -122,6 +123,11 @@ workflows:
           pushd $PRODUCT
           zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos$DEV_TARGET-arm64.xctestrun"
           popd
+      - name: Upload to Firebase Test Lab
+        script: |
+          gcloud firebase test ios run --test "build/ios_integ/Build/Products/ios_tests.zip" \ 
+            --device model=iphone13,version=$DEV_TARGET,locale=en_GB,orientation=portrait \
+            --timeout 3m
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
