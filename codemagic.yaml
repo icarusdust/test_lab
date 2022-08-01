@@ -83,7 +83,7 @@ workflows:
         OUTPUT: "../build/ios_integ"
         PRODUCT: "build/ios_integ/Build/Products"
         DEV_TARGET: "15.4"
-      flutter: latest
+      flutter: 3.0.5
       xcode: latest
       cocoapods: default
     scripts:
