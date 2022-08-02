@@ -117,7 +117,7 @@ workflows:
           flutter build ios integration_test/app_test.dart --release
 
           pushd ios
-          xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ./build/ios_integ/Build/Products -sdk iphoneos build-for-testing 
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ./build/ios_integ -sdk iphoneos build-for-testing 
           popd
 
           pushd ./build/ios_integ/Build/Products
