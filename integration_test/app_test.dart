@@ -18,23 +18,23 @@ void main() {
     expect(find.text('Input some text!'), findsOneWidget);
   });
 
-  testWidgets(
-    'Text is entered into field and Alert is shown inclucing name entered',
-    (WidgetTester tester) async {
-      await tester.pumpWidget(MyApp());
+  // testWidgets(
+  //   'Text is entered into field and Alert is shown inclucing name entered',
+  //   (WidgetTester tester) async {
+  //     await tester.pumpWidget(MyApp());
 
-      final inputText = 'Kevin';
-      await tester.enterText(find.byKey(Key('text-field')), inputText);
+  //     final inputText = 'Kevin';
+  //     await tester.enterText(find.byKey(Key('text-field')), inputText);
 
-      await tester.tap(find.byType(FloatingActionButton));
-      await tester.pumpAndSettle();
+  //     await tester.tap(find.byType(FloatingActionButton));
+  //     await tester.pumpAndSettle();
 
-      expect(find.text('Hey, Kevin!'), findsOneWidget);
+  //     expect(find.text('Hey, Kevin!'), findsOneWidget);
 
-      sleep(Duration(seconds: 5));
+  //     sleep(Duration(seconds: 5));
 
-      await tester.tap(find.byType(TextButton));
-      await tester.pumpAndSettle();
-    },
-  );
+  //     await tester.tap(find.byType(TextButton));
+  //     await tester.pumpAndSettle();
+  //   },
+  // );
 }
