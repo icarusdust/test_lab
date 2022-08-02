@@ -133,7 +133,7 @@ workflows:
           # Select YOUR Firebase project through which want to run the tests
           gcloud --quiet config set project flutter-integration-tests
 
-          gcloud firebase test ios run --test "./build/ios_integ/Build/Products/ios_tests.zip" \
+          gcloud firebase test ios run --test "/Users/builder/clone/ios/build/ios_integ/Build/Products/ios_tests.zip" \
             --device model=iphone11pro,version=14.7,locale=en_GB,orientation=portrait \
             --timeout 3m
     artifacts:
