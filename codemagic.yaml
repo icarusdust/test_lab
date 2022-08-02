@@ -142,3 +142,4 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - /Users/builder/clone/ios/build/ios_integ/Build/Products/ios_tests.zip
