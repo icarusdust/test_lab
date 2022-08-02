@@ -121,7 +121,7 @@ workflows:
           popd
 
           pushd ./build/ios_integ/Build/Products
-          zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos14.7-arm64.xctestrun"
+          zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.5-arm64.xctestrun"
           popd
       - name: Upload to Firebase Test Lab
         script: |
