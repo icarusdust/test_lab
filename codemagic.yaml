@@ -71,6 +71,7 @@ workflows:
           failure: false # To not receive a notification when a build fails
   ios-release:
     name: iOS release
+    instance_type: mac_mini_m1
     max_build_duration: 120
     environment:
       ios_signing:
