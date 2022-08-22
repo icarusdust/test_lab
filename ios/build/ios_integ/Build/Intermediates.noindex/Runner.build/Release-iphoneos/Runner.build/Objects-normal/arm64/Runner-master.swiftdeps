@@ -1,6 +1,0 @@
-version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
-options: "b6c92ff1c8109e00fde10bdac2583a601bc938996632ff2e5ce9a8a688b9857c"
-build_start_time: [1661190293, 715862989]
-build_end_time: [1661190295, 865415096]
-inputs:
-  "/Users/kevin/Documents/projects/inegrate/ios/Runner/AppDelegate.swift": [1646655554, 0]
