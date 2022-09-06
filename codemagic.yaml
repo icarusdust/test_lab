@@ -1,143 +1,108 @@
+definitions:
+  cool_vars: &cool_vars
+    meow: 'testing'
+  instance_mac_pro: &instance_mac_pro
+    instance_type: mac_pro
+    max_build_duration: 120
+  env_versions: &env_versions
+    flutter: stable
+    xcode: 13.3.1
+    cocoapods: default
+  triggering:
+    events:
+      - tag
+    tag_patterns:
+      - pattern: 'v1.2'
+  environment:
+    automatic_ios_signing: &automatic_ios_signing
+      groups:
+        - ios
+        - firebase_credentials
+      vars:
+        BUNDLE_ID: "com.example.testLabIos"
+        XCODE_WORKSPACE: "Runner.xcworspace"
+        XCODE_SCHEME: "Runner"
 workflows:
-  android-workflow:
-    name: Android Workflow
-    instance_type: mac_mini_m1
-    max_build_duration: 120
+  ios-workflow:
+    name: iOS Workflow
+    <<: *instance_mac_pro
     environment:
-      groups:
-        - google_credentials # <-- (Includes GCLOUD_KEY_FILE, GOOGLE_CREDENTIALS)
-          # GCLOUD_KEY_FILE <-- Put your Google Cloud Key file here
-          # GOOGLE_CREDENTIALS <-- Put your google-services.json here if publishing to Google Play
-      vars:
-        FIREBASE_PROJECT: "YOUR_FIREBASE_PROJECT_NAME" # <-- Put your Firebase Project Name here
-      flutter: stable
-      xcode: latest
-      cocoapods: default
+        <<: *env_versions
+        <<: *automatic_ios_signing
+#         vars:
+#            <<: *cool_vars
+      
+#     instance_type: mac_pro
+#     max_build_duration: 120
+#     environment:
+#       groups:
+#         - appstore_credentials
+#       vars:
+#         XCODE_WORKSPACE: "Runner.xcworkspace"
+#         XCODE_SCHEME: "Runner"                
+#         BUNDLE_ID: "com.example.kobitionIntegration"
+#         APP_STORE_ID: 1625065284
+
+# #         APPPATH: "build/ios/ipa/kobition_integration.ipa"
+# #         APP_KEY: "123"
+
+#       flutter: stable
+#       xcode: edge
+#       cocoapods: default
     scripts:
-      - name: Set up debug.keystore
-        script: |
-          rm -f ~/.android/debug.keystore
-          keytool -genkeypair -alias androiddebugkey -keypass android -keystore ~/.android/debug.keystore -storepass android -dname 'CN=Android Debug,O=Android,C=US' -keyalg 'RSA' -keysize 2048 -validity 10000
-      - name: Set up local.properties
-        script: |
-          echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-      - name: Get Flutter packages
-        script: |
-          flutter packages pub get
-      - name: Build APK with Flutter
-        script: |
-          flutter build apk --debug
-      - name: Create debug and test APK
-        script: |
-          set -ex
-          cd android
-          ./gradlew app:assembleAndroidTest
-          ./gradlew app:assembleDebug -Ptarget="$CM_BUILD_DIR/integration_test/app_test.dart"
-      - name: Run Firebase Test Lab tests
-        script: |
-          set -ex
+#       - name: Firebase
+#         script: |
+#           flutter pub add firebase_core
+#           flutter pub add firebase_messaging
 
-          echo $GCLOUD_KEY_FILE | base64 --decode > ./gcloud_key_file.json
-
-          gcloud auth activate-service-account --key-file=gcloud_key_file.json
-
-          gcloud --quiet config set project $FIREBASE_PROJECT
-
-          gcloud firebase test android run \
-            --type instrumentation \
-            --app build/app/outputs/apk/debug/app-debug.apk \
-            --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-            --timeout 3m
-    artifacts:
-      - build/**/outputs/**/*.apk
-      - build/**/outputs/**/*.aab
-      - build/**/outputs/**/mapping.txt
-      - flutter_drive.log
-    publishing:
-      # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
-      email:
-        recipients:
-          - user_1@example.com
-          - user_2@example.com
-        notify:
-          success: true # To not receive a notification when a build succeeds
-          failure: false # To not receive a notification when a build fails
-      slack:
-        # See the following link about how to connect your Slack account - https://docs.codemagic.io/publishing-yaml/distribution/#slack
-        channel: "#channel-name"
-        notify_on_build_start: true # To receive a notification when a build starts
-        notify:
-          success: true # To not receive a notification when a build succeeds
-          failure: false # To not receive a notification when a build fails
-  ios-release:
-    name: iOS release
-    instance_type: mac_mini_m1
-    max_build_duration: 120
-    environment:
-      ios_signing:
-        provisioning_profiles:
-          - fad_ios_development
-        certificates:
-          - ios-development
-      groups:
-        - service_account
-        # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
-        # - ios_creds # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
-      vars:
-        XCODE_WORKSPACE: "ios/Runner.xcworkspace" # <-- Put your encrypted Certificate Private Key here
-        # Environment variable values provided when triggering build with Codemagic API. Alternatively add the required values below.
-        # APP_STORE_APP_ID: 1555555551 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information
-        BUNDLE_ID: "io.codemagic.fad"
-        OUTPUT: "../build/ios_integ"
-        PRODUCT: "build/ios_integ/Build/Products"
-        DEV_TARGET: 14.7
-      flutter: 3.0.5
-      xcode: 13.3.1
-      cocoapods: default
-    scripts:
-      - name: Get Flutter Packages
+    
+      - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
         script: |
-          flutter packages pub get
-      - name: Pod install
+          keychain initialize
+#         /usr/local/bin/docker --version
+#         echo $CREDS
+#         echo $Test
+      - name: Fetch signing files
         script: |
-          find . -name "Podfile" -execdir pod install \;
-      # - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
-      #   script: |
-      #     keychain initialize
-      # - name: Fetch signing files
-      #   script: |
-      #     app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_DEVELOPMENT
-      # - name: Add certs to keychain
-      #   script: |
-      #     keychain add-certificates
+          app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_ADHOC --create
+          app-store-connect fetch-signing-files "com.mars.RunnerTests.xctrunner" --type IOS_APP_ADHOC --create
+      - name: Use system default keychain
+        script: |
+          keychain add-certificates
+#       - *codesign
       - name: Set up code signing settings on Xcode project
         script: |
           xcode-project use-profiles
+      - name: Get Flutter packages
+        script: |
+          cd . && flutter packages pub get         
+      - name: Install pods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+#       - name: Flutter build ipa and automatic versioning
+#         script: |
+#           flutter build ipa --release \
+#           --export-options-plist=/Users/builder/export_options.plist
+     
       - name: Build test package
         script: |
           flutter build ios integration_test/app_test.dart --release
-
           pushd ios
-          xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ./build/ios_integ -sdk iphoneos build-for-testing 
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Runner.xcworkspace -derivedDataPath ./build/ios_integ -sdk iphoneos build-for-testing 
           popd
-
           pushd /Users/builder/clone/ios/build/ios_integ/Build/Products
           zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.4-arm64.xctestrun"
           popd
-      - name: Upload to Firebase Test Lab
+      - name: Run Firebase Test Lab tests
         script: |
-
-          # Write the environment variable to a JSON file
-          echo $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS > ./gcloud_key_file.json
-          # Using the gcloud CLI (preinstalled on Codemagic) authenticate using the service account key
+          echo $GCLOUD_KEY_FILE > ./gcloud_key_file.json
           gcloud auth activate-service-account --key-file=gcloud_key_file.json
-          # Select YOUR Firebase project through which want to run the tests
-          gcloud --quiet config set project flutter-integration-tests
-
+          gcloud --quiet config set project $FIREBASE_PROJECT 
           gcloud firebase test ios run --test "/Users/builder/clone/ios/build/ios_integ/Build/Products/ios_tests.zip" \
             --device model=iphone11pro,version=14.7,locale=en_US,orientation=portrait \
             --xcode-version=13.3.1 \
             --timeout 10m
+            
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
