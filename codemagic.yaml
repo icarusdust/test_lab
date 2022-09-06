@@ -19,7 +19,7 @@ definitions:
         - ios
         - firebase_credentials
       vars:
-        BUNDLE_ID: "com.example.testLabIos"
+        BUNDLE_ID: "io.codemagic.fad"
         XCODE_WORKSPACE: "Runner.xcworspace"
         XCODE_SCHEME: "Runner"
 workflows:
@@ -65,7 +65,7 @@ workflows:
       - name: Fetch signing files
         script: |
           app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_ADHOC --create
-          app-store-connect fetch-signing-files "com.mars.RunnerTests.xctrunner" --type IOS_APP_ADHOC --create
+          app-store-connect fetch-signing-files "io.codemgaic.RunnerTests.xctrunner" --type IOS_APP_ADHOC --create
       - name: Use system default keychain
         script: |
           keychain add-certificates
