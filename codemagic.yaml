@@ -88,7 +88,7 @@ workflows:
         script: |
           flutter build ios integration_test/app_test.dart --release
           pushd ios
-            xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $output -sdk iphoneos build-for-testing
+            xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath ./build/ios_integ -sdk iphoneos build-for-testing
           popd
           pushd /Users/builder/clone/ios/build/ios_integ/Build/Products
           zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos15.4-arm64.xctestrun"
