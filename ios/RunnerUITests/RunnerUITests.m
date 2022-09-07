@@ -1,46 +1,51 @@
-//
-//  RunnerUITests.m
-//  RunnerUITests
-//
-//  Created by Niall on 06.09.2022.
-//
+// //
+// //  RunnerUITests.m
+// //  RunnerUITests
+// //
+// //  Created by Niall on 06.09.2022.
+// //
 
-#import <XCTest/XCTest.h>
+@import XCTest;
+@import integration_test;
 
-@interface RunnerUITests : XCTestCase
+INTEGRATION_TEST_IOS_RUNNER(RunnerTests)
 
-@end
+// #import <XCTest/XCTest.h>
 
-@implementation RunnerUITests
+// @interface RunnerUITests : XCTestCase
 
-- (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+// @end
 
-    // In UI tests it is usually best to stop immediately when a failure occurs.
-    self.continueAfterFailure = NO;
+// @implementation RunnerUITests
 
-    // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-}
+// - (void)setUp {
+//     // Put setup code here. This method is called before the invocation of each test method in the class.
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-}
+//     // In UI tests it is usually best to stop immediately when a failure occurs.
+//     self.continueAfterFailure = NO;
 
-- (void)testExample {
-    // UI tests must launch the application that they test.
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app launch];
+//     // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+// }
 
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
+// - (void)tearDown {
+//     // Put teardown code here. This method is called after the invocation of each test method in the class.
+// }
 
-- (void)testLaunchPerformance {
-    if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *)) {
-        // This measures how long it takes to launch your application.
-        [self measureWithMetrics:@[[[XCTApplicationLaunchMetric alloc] init]] block:^{
-            [[[XCUIApplication alloc] init] launch];
-        }];
-    }
-}
+// - (void)testExample {
+//     // UI tests must launch the application that they test.
+//     XCUIApplication *app = [[XCUIApplication alloc] init];
+//     [app launch];
 
-@end
+//     // Use XCTAssert and related functions to verify your tests produce the correct results.
+// }
+
+// - (void)testLaunchPerformance {
+//     if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *)) {
+//         // This measures how long it takes to launch your application.
+//         [self measureWithMetrics:@[[[XCTApplicationLaunchMetric alloc] init]] block:^{
+//             [[[XCUIApplication alloc] init] launch];
+//         }];
+//     }
+// }
+
+// @end
