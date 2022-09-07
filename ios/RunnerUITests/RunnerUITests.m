@@ -8,7 +8,7 @@
 @import XCTest;
 @import integration_test;
 
-INTEGRATION_TEST_IOS_RUNNER(RunnerTests)
+INTEGRATION_TEST_IOS_RUNNER(RunnerUITests)
 
 // #import <XCTest/XCTest.h>
 
