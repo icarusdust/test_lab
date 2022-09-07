@@ -99,7 +99,7 @@ workflows:
           gcloud auth activate-service-account --key-file=gcloud_key_file.json
           gcloud --quiet config set project $FIREBASE_PROJECT 
           gcloud firebase test ios run --test "/Users/builder/clone/ios/build/ios_integ/Build/Products/ios_tests.zip" \
-            --device model=iphone11pro,version=14.7,locale=en_US,orientation=portrait \
+            --device model=iphone11,version=13.6,locale=en_US,orientation=portrait \
             --xcode-version=13.3.1 \
             --timeout 10m
             
