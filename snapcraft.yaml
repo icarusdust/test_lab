@@ -1,4 +1,4 @@
-name: test_lab
+name: test-lab
 version: '1.0'
 summary: Test Lab
 description: Testing ios integration testing
@@ -17,6 +17,6 @@ parts:
     flutter-target: lib/main.dart
 
 apps:
-  super-cool-app:
-    command: test_lab
+  test-lab:
+    command: test-lab
     extensions: [flutter-dev]
