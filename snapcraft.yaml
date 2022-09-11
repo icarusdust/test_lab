@@ -1,8 +1,8 @@
+name: test_lab
+version: '1.0'
+summary: Test Lab
+description: Testing ios integration testing
 
-name: test-lab
-version: git
-summary: Super Cool App
-description: Super Cool App that does everything!
 confinement: strict
 base: core18
 grade: stable
@@ -10,13 +10,13 @@ architectures:
   - build-on: [ amd64 ]
   - build-on: [ arm64 ]
 
-apps:
-  super-cool-app:
-    command: super_cool_app
-    extensions: [flutter-master]
-
 parts:
   super-cool-app:
-    source: .
     plugin: flutter
-    flutter-target: lib/main.dart # The main entry-point file of the application
+    source: https://github.com/icarusdust/test_lab.git
+    flutter-target: lib/main.dart
+
+apps:
+  super-cool-app:
+    command: test_lab
+    extensions: [flutter-dev]
