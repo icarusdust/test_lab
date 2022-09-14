@@ -6,9 +6,9 @@ definitions:
     max_build_duration: 120
   env_versions: &env_versions
     flutter: stable
-    xcode: latest
+    xcode: 13.0
     cocoapods: default
-    ndk: 25.1.8937393
+    ndk: 23.1.7779620
   triggering:
     events:
       - tag
