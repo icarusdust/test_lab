@@ -8,6 +8,7 @@ definitions:
     flutter: stable
     xcode: 13.3.1
     cocoapods: default
+    ndk: 23.1.7779620
   triggering:
     events:
       - tag
