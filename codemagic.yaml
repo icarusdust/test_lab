@@ -6,9 +6,8 @@ definitions:
     max_build_duration: 120
   env_versions: &env_versions
     flutter: stable
-    xcode: 13.3
+    xcode: 13.3.1
     cocoapods: default
-    ndk: 23.1.7779620
   triggering:
     events:
       - tag
@@ -66,7 +65,6 @@ workflows:
       - name: Fetch signing files
         script: |
           app-store-connect fetch-signing-files $BUNDLE_ID --create
-          app-store-connect fetch-signing-files "com.mars.RunnerUITests.xctrunner" --create
       - name: Use system default keychain
         script: |
           keychain add-certificates
