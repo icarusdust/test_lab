@@ -65,7 +65,7 @@ workflows:
       - name: Fetch signing files
         script: |
           app-store-connect fetch-signing-files $BUNDLE_ID --create
-          # app-store-connect fetch-signing-files "com.mars.RunnerUITests." --create
+          app-store-connect fetch-signing-files "com.testlab.uitest.RunnerTests.xctrunner" --create
       - name: Use system default keychain
         script: |
           keychain add-certificates
